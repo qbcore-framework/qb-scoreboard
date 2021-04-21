@@ -49,7 +49,7 @@ GetClosestPlayer = function()
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
             local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
-            local distance = #(pos - coords)
+            local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, coords.x, coords.y, coords.z, true)
 
             if closestDistance == -1 or closestDistance > distance then
                 closestPlayer = closestPlayers[i]
@@ -85,7 +85,7 @@ GetPlayersFromCoords = function(coords, distance)
     for _, player in pairs(players) do
 		local target = GetPlayerPed(player)
 		local targetCoords = GetEntityCoords(target)
-		local targetdistance = #(targetCoords - vector3(coords.x, coords.y, coords.z))
+		local targetdistance = GetDistanceBetweenCoords(targetCoords, coords.x, coords.y, coords.z, true)
 		if targetdistance <= distance then
 			table.insert(closePlayers, player)
 		end
@@ -93,6 +93,56 @@ GetPlayersFromCoords = function(coords, distance)
     
     return closePlayers
 end
+
+
+Citizen.CreateThread(function()
+    while true do
+        if IsControlJustPressed(0, Config.OpenKey) then
+            if not scoreboardOpen then
+                QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetPlayersArrays', function(playerList)
+                    QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetActivity', function(cops, ambulance)
+                        PlayerOptin = playerList
+                        Config.CurrentCops = cops
+    
+                        SendNUIMessage({
+                            action = "open",
+                            players = GetCurrentPlayers(),
+                            maxPlayers = Config.MaxPlayers,
+                            requiredCops = Config.IllegalActions,
+                            currentCops = Config.CurrentCops,
+                            currentAmbulance = ambulance
+                        })
+                        scoreboardOpen = true
+                    end)
+                end)
+            end
+        end
+
+        if IsControlJustReleased(0, Config.OpenKey) then
+            if scoreboardOpen then
+                SendNUIMessage({
+                    action = "close",
+                })
+                scoreboardOpen = false
+            end
+        end
+
+        if scoreboardOpen then
+            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
+                local PlayerId = GetPlayerServerId(player)
+                local PlayerPed = GetPlayerPed(player)
+                local PlayerName = GetPlayerName(player)
+                local PlayerCoords = GetEntityCoords(PlayerPed)
+
+                if not PlayerOptin[PlayerId].permission then
+                    DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                end
+            end
+        end
+
+        Citizen.Wait(3)
+    end
+end)
 
 function GetCurrentPlayers()
     local TotalPlayers = 0
