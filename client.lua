@@ -115,3 +115,14 @@ GetPlayersFromCoords = function(coords, distance)
     
     return closePlayers
 end
+
+GetPlayers = function()
+    local players = {}
+    for _, player in ipairs(GetActivePlayers()) do
+        local ped = GetPlayerPed(player)
+        if DoesEntityExist(ped) then
+            table.insert(players, player)
+        end
+    end
+    return players
+end
