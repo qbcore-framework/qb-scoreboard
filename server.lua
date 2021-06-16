@@ -3,6 +3,14 @@ TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
 
 -- Code
 
+QBCore.Functions.CreateCallback('qb-scoreboard:server:GetCurrentPlayers', function(source, cb)
+    local TotalPlayers = 0
+    for k, v in pairs(QBCore.Functions.GetPlayers()) do
+        TotalPlayers = TotalPlayers + 1
+    end
+    cb(TotalPlayers)
+end)
+
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetActivity', function(source, cb)
     local PoliceCount = 0
     local AmbulanceCount = 0
