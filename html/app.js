@@ -30,6 +30,15 @@ QBScoreboard.Open = function (data) {
     } else {
       $(status).html('<i class="fas fa-times"></i>');
     }
+    if (data.currentAmbulance > 0) {
+      var Abeam = $(".scoreboard-info").find('[data-type="ambulance"]');
+      var Astatus = $(Abeam).find(".info-beam-status");
+      $(Astatus).html('<i class="fas fa-check"></i>');
+    } else {
+      var Abeam = $(".scoreboard-info").find('[data-type="ambulance"]');
+      var Astatus = $(Abeam).find(".info-beam-status");
+      $(Astatus).html('<i class="fas fa-times"></i>');
+    }
   });
 };
 
