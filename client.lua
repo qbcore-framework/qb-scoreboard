@@ -26,56 +26,48 @@ end)
 
 -- Main Thread
 
-Citizen.CreateThread(function()
-    while true do
-        if IsControlJustPressed(0, Config.OpenKey) then
-            if not scoreboardOpen then
-                QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetPlayersArrays', function(playerList)
-                    QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetActivity', function(cops, ambulance)
-                        QBCore.Functions.TriggerCallback("qb-scoreboard:server:GetCurrentPlayers", function(Players)
-                            PlayerOptin = playerList
-                            Config.CurrentCops = cops
-        
-                            SendNUIMessage({
-                                action = "open",
-                                players = Players,
-                                maxPlayers = Config.MaxPlayers,
-                                requiredCops = Config.IllegalActions,
-                                currentCops = Config.CurrentCops,
-                                currentAmbulance = ambulance
-                            })
-                            scoreboardOpen = true
-                        end)
-                    end)
+RegisterCommand('scoreboard', function()
+    if not scoreboardOpen then
+        QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetPlayersArrays', function(playerList)
+            QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetActivity', function(cops, ambulance)
+                QBCore.Functions.TriggerCallback("qb-scoreboard:server:GetCurrentPlayers", function(Players)
+                    PlayerOptin = playerList
+                    Config.CurrentCops = cops
+
+                    SendNUIMessage({
+                        action = "open",
+                        players = Players,
+                        maxPlayers = Config.MaxPlayers,
+                        requiredCops = Config.IllegalActions,
+                        currentCops = Config.CurrentCops,
+                        currentAmbulance = ambulance
+                    })
+                    scoreboardOpen = true
                 end)
+            end)
+        end)
+    else
+        SendNUIMessage({
+            action = "close",
+        })
+        scoreboardOpen = false
+    end
+
+    if scoreboardOpen then
+        for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
+            local PlayerId = GetPlayerServerId(player)
+            local PlayerPed = GetPlayerPed(player)
+            local PlayerName = GetPlayerName(player)
+            local PlayerCoords = GetEntityCoords(PlayerPed)
+
+            if not PlayerOptin[PlayerId].permission then
+                DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
             end
         end
-
-        if IsControlJustReleased(0, Config.OpenKey) then
-            if scoreboardOpen then
-                SendNUIMessage({
-                    action = "close",
-                })
-                scoreboardOpen = false
-            end
-        end
-
-        if scoreboardOpen then
-            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
-                local PlayerId = GetPlayerServerId(player)
-                local PlayerPed = GetPlayerPed(player)
-                local PlayerName = GetPlayerName(player)
-                local PlayerCoords = GetEntityCoords(PlayerPed)
-
-                if not PlayerOptin[PlayerId].permission then
-                    DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
-                end
-            end
-        end
-
-        Citizen.Wait(3)
     end
 end)
+
+RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', 'HOME')
 
 -- Functions
 
