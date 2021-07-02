@@ -4,18 +4,16 @@ game 'gta5'
 description 'QB-Scoreboard'
 version '1.0.0'
 
-ui_page "html/ui.html"
+ui_page 'html/ui.html'
 
-client_scripts {
-    'client.lua',
-	'config.lua',
+shared_scripts { 
+	'@qb-core/import.lua',
+	'config.lua'
 }
 
-server_scripts {
-	'config.lua',
-	'server.lua',
-}
+client_script 'client.lua'
+server_script 'server.lua'
 
 files {
-    "html/*"
+    'html/*'
 }

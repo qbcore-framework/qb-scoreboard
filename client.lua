@@ -1,15 +1,5 @@
-QBCore = nil
 local scoreboardOpen = false
 local PlayerOptin = {}
-
-Citizen.CreateThread(function()
-    while QBCore == nil do
-        TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
-        Citizen.Wait(200)
-    end
-end)
-
--- Events
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -23,8 +13,6 @@ RegisterNetEvent('qb-scoreboard:client:SetActivityBusy')
 AddEventHandler('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
 end)
-
--- Main Thread
 
 RegisterCommand('scoreboard', function()
     if not scoreboardOpen then
