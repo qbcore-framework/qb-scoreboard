@@ -14,6 +14,8 @@ AddEventHandler('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
 end)
 
+local shouldDraw = false
+
 RegisterCommand('scoreboard', function()
     if not scoreboardOpen then
         QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetPlayersArrays', function(playerList)
@@ -42,6 +44,25 @@ RegisterCommand('scoreboard', function()
     end
 
     if scoreboardOpen then
+        if animationState ~= shouldDraw then
+            animationState = shouldDraw
+            if animationState then
+                local playerPed = GetPlayerPed(-1)
+                loadAnimDict("missheistdockssetup1clipboard@base")
+                TaskPlayAnim(playerPed, 'missheistdockssetup1clipboard@base', 'base', 8.0, -8, -1, 49, 0, 0, 0, 0)
+                clipboardEntity = CreateObject(GetHashKey("p_amb_clipboard_01"), x, y, z, true)
+                coords = { x = 0.2, y = 0.1, z = 0.08 }
+                rotation = { x = -80.0, y = -20.0, z = 0.0 }
+                AttachEntityToEntity(clipboardEntity, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(PlayerId()), 18905), coords.x, coords.y, coords.z, rotation.x, rotation.y, rotation.z, 1, 1, 0, 1, 0, 1)
+            else
+                ClearPedTasks(GetPlayerPed(-1))
+                if clipboardEntity ~= nil then
+                    DeleteEntity(clipboardEntity)
+                    clipboardEntity = nil
+                end
+            end
+        end
+
         for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
             local PlayerId = GetPlayerServerId(player)
             local PlayerPed = GetPlayerPed(player)
@@ -105,4 +126,10 @@ GetPlayers = function()
         end
     end
     return players
+end
+function loadAnimDict(dict)
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Citizen.Wait(5)
+    end
 end
