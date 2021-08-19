@@ -16,7 +16,7 @@ $(document).ready(function () {
 QBScoreboard.Open = function (data) {
   $(".scoreboard-block").fadeIn(150);
   $("#total-players").html(
-    "<p>" + data.players + "/" + data.maxPlayers + "</p>"
+    "<p>" + data.players + " of " + data.maxPlayers + "</p>"
   );
 
   $.each(data.requiredCops, function (i, category) {
