@@ -55,7 +55,7 @@ RegisterCommand('scoreboard', function()
     end
 end)
 
-RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', 'HOME')
+RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', Config.OpenKey)
 
 -- Functions
 

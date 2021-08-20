@@ -1,7 +1,7 @@
 Config = Config or {}
 
 -- Open scoreboard key
-Config.OpenKey = 213
+Config.OpenKey = 'HOME' -- https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
 
 -- Max Server Players
 Config.MaxPlayers = GetConvarInt('sv_maxclients', 64) -- It returnes 64 if it cant find the Convar Int
