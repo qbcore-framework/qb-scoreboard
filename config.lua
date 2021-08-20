@@ -1,7 +1,7 @@
 Config = Config or {}
 
 -- Open scoreboard key
-Config.OpenKey = 213
+Config.OpenKey = 214
 
 -- Max Server Players
 Config.MaxPlayers = GetConvarInt('sv_maxclients', 64) -- It returnes 64 if it cant find the Convar Int
