@@ -21,7 +21,7 @@ Config.IllegalActions = {
         busy = false,
     },
     ["bankrobbery"] = {
-        minimum = 4,
+        minimum = 3,
         busy = false,
     },
     ["paleto"] = {
@@ -29,7 +29,7 @@ Config.IllegalActions = {
         busy = false,
     },
     ["pacific"] = {
-        minimum = 6,
+        minimum = 5,
         busy = false,
     },
 }
