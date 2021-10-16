@@ -40,18 +40,22 @@ RegisterCommand('scoreboard', function()
         })
         scoreboardOpen = false
     end
+end)
 
-    if scoreboardOpen then
-        for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
-            local PlayerId = GetPlayerServerId(player)
-            local PlayerPed = GetPlayerPed(player)
-            local PlayerName = GetPlayerName(player)
-            local PlayerCoords = GetEntityCoords(PlayerPed)
+Citizen.CreateThread(function()
+    while true do
+        if scoreboardOpen then
+            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
+                local PlayerId = GetPlayerServerId(player)
+                local PlayerPed = GetPlayerPed(player)
+                local PlayerCoords = GetEntityCoords(PlayerPed)
 
-            if not PlayerOptin[PlayerId].permission then
-                DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                if not PlayerOptin[PlayerId].permission then
+                    QBCore.Functions.DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                end
             end
         end
+        Citizen.Wait(5)
     end
 end)
 
