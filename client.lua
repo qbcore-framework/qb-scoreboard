@@ -1,3 +1,5 @@
+QBCore = exports['qb-core']:GetCoreObject()|
+
 local scoreboardOpen = false
 local PlayerOptin = {}
 
