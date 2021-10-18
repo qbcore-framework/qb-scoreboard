@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
                 local PlayerCoords = GetEntityCoords(PlayerPed)
 
                 if not PlayerOptin[PlayerId].permission then
-                    QBCore.Functions.DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                    DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
                 end
             end
         end
