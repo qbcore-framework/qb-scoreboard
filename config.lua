@@ -39,3 +39,6 @@ Config.CurrentCops = 0
 
 -- Current Ambulance / Doctors Online
 Config.CurrentAmbulance = 0
+
+-- Show ID's for all players or Opted in Staff
+Config.ShowIDforALL = false
