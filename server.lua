@@ -1,3 +1,5 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetCurrentPlayers', function(source, cb)
     local TotalPlayers = 0
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
@@ -42,8 +44,7 @@ QBCore.Functions.CreateCallback('qb-scoreboard:server:GetPlayersArrays', functio
     cb(players)
 end)
 
-RegisterServerEvent('qb-scoreboard:server:SetActivityBusy')
-AddEventHandler('qb-scoreboard:server:SetActivityBusy', function(activity, bool)
+RegisterNetEvent('qb-scoreboard:server:SetActivityBusy', function(activity, bool)
     Config.IllegalActions[activity].busy = bool
     TriggerClientEvent('qb-scoreboard:client:SetActivityBusy', -1, activity, bool)
 end)

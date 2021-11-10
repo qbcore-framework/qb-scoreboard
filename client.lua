@@ -1,3 +1,4 @@
+local QBCore = exports['qb-core']:GetCoreObject()
 local scoreboardOpen = false
 local PlayerOptin = {}
 
@@ -51,18 +52,14 @@ local function GetPlayersFromCoords(coords, distance)
     return closePlayers
 end
 
-
-
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
-AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
     QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetConfig', function(config)
         Config.IllegalActions = config
     end)
 end)
 
-RegisterNetEvent('qb-scoreboard:client:SetActivityBusy')
-AddEventHandler('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
+RegisterNetEvent('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
 end)
 
@@ -94,7 +91,7 @@ RegisterCommand('scoreboard', function()
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         if scoreboardOpen then
             for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
@@ -107,7 +104,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        Citizen.Wait(5)
+        Wait(5)
     end
 end)
 
