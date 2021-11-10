@@ -1,7 +1,10 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local TotalPlayers = 0
+local PoliceCount = 0
+local AmbulanceCount = 0
+local players = {}
 
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetCurrentPlayers', function(source, cb)
-    local TotalPlayers = 0
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         TotalPlayers = TotalPlayers + 1
     end
@@ -9,22 +12,15 @@ QBCore.Functions.CreateCallback('qb-scoreboard:server:GetCurrentPlayers', functi
 end)
 
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetActivity', function(source, cb)
-    local PoliceCount = 0
-    local AmbulanceCount = 0
-    
-    for k, v in pairs(QBCore.Functions.GetPlayers()) do
-        local Player = QBCore.Functions.GetPlayer(v)
-        if Player ~= nil then
-            if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                PoliceCount = PoliceCount + 1
-            end
+    for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
+        if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
+            PoliceCount = PoliceCount + 1
+        end
 
-            if ((Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") and Player.PlayerData.job.onduty) then
-                AmbulanceCount = AmbulanceCount + 1
-            end
+        if v.PlayerData.job.name == "ambulance" and v.PlayerData.job.onduty then
+            AmbulanceCount = AmbulanceCount + 1
         end
     end
-
     cb(PoliceCount, AmbulanceCount)
 end)
 
@@ -33,13 +29,9 @@ QBCore.Functions.CreateCallback('qb-scoreboard:server:GetConfig', function(sourc
 end)
 
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetPlayersArrays', function(source, cb)
-    local players = {}
-    for k, v in pairs(QBCore.Functions.GetPlayers()) do
-        local Player = QBCore.Functions.GetPlayer(v)
-        if Player ~= nil then 
-            players[Player.PlayerData.source] = {}
-            players[Player.PlayerData.source].permission = QBCore.Functions.IsOptin(Player.PlayerData.source)
-        end
+    for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
+        players[v.PlayerData.source] = {}
+        players[v.PlayerData.source].permission = QBCore.Functions.IsOptin(v.PlayerData.source)
     end
     cb(players)
 end)

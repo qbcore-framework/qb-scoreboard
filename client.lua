@@ -48,12 +48,13 @@ local function GetPlayersFromCoords(coords, distance)
             closePlayers[#closePlayers+1] = player
 		end
     end
-    
+
     return closePlayers
 end
 
+-- Events
+
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    isLoggedIn = true
     QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetConfig', function(config)
         Config.IllegalActions = config
     end)
@@ -62,6 +63,8 @@ end)
 RegisterNetEvent('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
 end)
+
+-- Command
 
 RegisterCommand('scoreboard', function()
     if not scoreboardOpen then
@@ -91,6 +94,10 @@ RegisterCommand('scoreboard', function()
     end
 end)
 
+RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', Config.OpenKey)
+
+-- Threads
+
 CreateThread(function()
     while true do
         if scoreboardOpen then
@@ -98,7 +105,6 @@ CreateThread(function()
                 local PlayerId = GetPlayerServerId(player)
                 local PlayerPed = GetPlayerPed(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
-
                 if Config.ShowIDforALL or PlayerOptin[PlayerId].permission then
                     DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
                 end
@@ -107,5 +113,3 @@ CreateThread(function()
         Wait(5)
     end
 end)
-
-RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', Config.OpenKey)
