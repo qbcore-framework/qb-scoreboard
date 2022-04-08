@@ -49,20 +49,18 @@ RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', Config.OpenKey)
 -- Threads
 
 CreateThread(function()
-    local loop = 1000
     while true do
+        local loop = 1000
         if scoreboardOpen then
             for _, player in pairs(QBCore.Functions.GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
                 local PlayerId = GetPlayerServerId(player)
                 local PlayerPed = GetPlayerPed(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
                 if Config.ShowIDforALL or PlayerOptin[PlayerId].permission then
+                    loop = 0
                     QBCore.Functions.DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
                 end
             end
-            loop = 0
-        else
-            loop = 1000
         end
         Wait(loop)
     end
