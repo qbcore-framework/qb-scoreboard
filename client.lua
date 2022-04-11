@@ -100,16 +100,18 @@ RegisterKeyMapping('scoreboard', 'Open Scoreboard', 'keyboard', Config.OpenKey)
 
 CreateThread(function()
     while true do
+        local loop = 1000
         if scoreboardOpen then
             for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
                 local PlayerId = GetPlayerServerId(player)
                 local PlayerPed = GetPlayerPed(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
                 if Config.ShowIDforALL or PlayerOptin[PlayerId].permission then
+                    loop = 0
                     DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
                 end
             end
         end
-        Wait(5)
+        Wait(loop)
     end
 end)
