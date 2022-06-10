@@ -21,7 +21,7 @@ Config.IllegalActions = {
         label = "Bank Robbery"
     },
     ["jewellery"] = {
-        minimumPolice = 3,
+        minimumPolice = 2,
         busy = false,
         label = "Jewellery"
     },
