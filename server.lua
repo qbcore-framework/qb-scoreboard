@@ -1,9 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-QBCore.Functions.CreateCallback('qb-scoreboard:server:GetConfig', function(_, cb)
-    cb(Config.IllegalActions)
-end)
-
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetScoreboardData', function(_, cb)
     local totalPlayers = 0
     local policeCount = 0
