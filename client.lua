@@ -54,12 +54,6 @@ end
 
 -- Events
 
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    QBCore.Functions.TriggerCallback('qb-scoreboard:server:GetConfig', function(config)
-        Config.IllegalActions = config
-    end)
-end)
-
 RegisterNetEvent('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
 end)
