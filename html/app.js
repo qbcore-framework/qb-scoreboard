@@ -1,58 +1,54 @@
-window.addEventListener("message", (event) => {
-  switch (event.data.action) {
-    case "open":
-      Open(event.data);
-      break;
-    case "close":
-      Close();
-      break;
-    case "setup":
-      Setup(event.data);
-      break;
-  }
-});
+import {
+  createApp,
+  ref,
+  onMounted,
+  onUnmounted,
+} from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
 
-const Open = (data) => {
-  $(".scoreboard-block").fadeIn(150);
-  $("#total-players").html("<p>" + data.players + " of " + data.maxPlayers + "</p>");
+createApp({
+  setup() {
+    const currentCops = ref(0);
+    const maxPlayers = ref(48);
+    const players = ref(1);
+    const requiredCops = ref(null);
+    const show = ref(false);
 
-  $.each(data.requiredCops, (i, category) => {
-    var beam = $(".scoreboard-info").find('[data-type="' + i + '"]');
-    var status = $(beam).find(".info-beam-status");
+    const getClassStatus = (item) => {
+      if (item.busy) return "fa-clock";
+      if (currentCops.value >= item.minimumPolice) return "fa-check";
+      return "fa-times";
+    };
 
-    // For anyone wondering, this does work, you can leave the brackets out if you have just one line of code to execute
-    if (category.busy)
-      $(status).html('<i class="fas fa-clock"></i>');
-    else if (data.currentCops >= category.minimumPolice)
-      $(status).html('<i class="fas fa-check"></i>');
-    else
-      $(status).html('<i class="fas fa-times"></i>');
-  });
-};
+    const onMessage = ({ data }) => {
+      switch (data.action) {
+        case "open":
+          currentCops.value = data.currentCops;
+          maxPlayers.value = data.maxPlayers;
+          players.value = data.players;
+          requiredCops.value = data.requiredCops;
+          show.value = true;
+          break;
+        case "close":
+          show.value = false;
+          break;
+      }
+    };
 
-const Close = () => {
-  $(".scoreboard-block").fadeOut(150);
-};
+    onMounted(() => {
+      window.addEventListener("message", onMessage);
+    });
 
-const Setup = (data) => {
-  let scoreboardHtml = "";
-  $.each(data.items, (index, value) => {
-    scoreboardHtml += `
-      <div class="scoreboard-info-beam" data-type=${index}>
-        <div class="info-beam-title">
-            <p>${value}</p>
-        </div>
-        <div class="info-beam-status"></div>
-      </div>
-    `;
-  });
-  scoreboardHtml += `
-    <div class="scoreboard-info-beam" style="background: #dc143c">
-      <div class="info-beam-title-players">
-        <p>Total Players</p>
-      </div>
-      <div class="info-beam-status" id="total-players" style="color: #ededed"></div>
-    </div>
-  `;
-  $(".scoreboard-info").html(scoreboardHtml);
-};
+    onUnmounted(() => {
+      window.removeEventListener("message", onMessage);
+    });
+
+    return {
+      currentCops,
+      maxPlayers,
+      players,
+      requiredCops,
+      show,
+      getClassStatus,
+    };
+  },
+}).mount("#app");
