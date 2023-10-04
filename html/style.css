@@ -8,7 +8,7 @@
 }
 
 .scoreboard-block {
-  display: block;
+  
   border-radius: 2vh;
   position: absolute;
   height: fit-content;
@@ -86,6 +86,13 @@
   justify-content: space-between;
   align-content: center;
   align-items: center;
+}
+
+.list-error {
+  color: white;
+  margin: 16px;
+  text-transform: none;
+  text-align: justify;
 }
 
 .fa-times {
