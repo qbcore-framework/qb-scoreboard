@@ -26,7 +26,7 @@
               <p>SERVER INFO</p>
             </div>
             <div class="scoreboard-info">
-              <template v-if="requiredCops && requiredCops.length">
+              <template v-if="requiredCops">
                 <div
                   v-for="(item, key) in requiredCops"
                   :key="`item_${key}`"

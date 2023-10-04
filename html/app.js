@@ -20,12 +20,13 @@ createApp({
     };
 
     const onMessage = ({ data }) => {
+    console.log(data)
       switch (data.action) {
         case "open":
           currentCops.value = data.currentCops || 0;
           maxPlayers.value = data.maxPlayers || 48;
           players.value = data.players || 1;
-          requiredCops.value = data.requiredCops || [];
+          requiredCops.value = data.requiredCops;
           show.value = true;
           break;
         case "close":
