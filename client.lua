@@ -55,6 +55,12 @@ end
 
 RegisterNetEvent('qb-scoreboard:client:SetActivityBusy', function(activity, busy)
     Config.IllegalActions[activity].busy = busy
+    if scoreboardOpen then
+        SendNUIMessage({
+            action = "update_busy_state",
+            requiredCops = Config.IllegalActions
+        })
+    end
 end)
 
 -- Command
@@ -70,7 +76,7 @@ if Config.Toggle then
                         players = players,
                         maxPlayers = Config.MaxPlayers,
                         requiredCops = Config.IllegalActions,
-                        currentCops = cops,                        
+                        currentCops = cops,
                     })
                     scoreboardOpen = true
                 end)

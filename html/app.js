@@ -20,7 +20,6 @@ createApp({
     };
 
     const onMessage = ({ data }) => {
-    console.log(data)
       switch (data.action) {
         case "open":
           currentCops.value = data.currentCops || 0;
@@ -29,6 +28,9 @@ createApp({
           requiredCops.value = data.requiredCops;
           show.value = true;
           break;
+        case "update_busy_state":
+          requiredCops.value = data.requiredCops;
+          break
         case "close":
           show.value = false;
           break;
