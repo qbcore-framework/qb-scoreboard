@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 
 .container {
   height: 100vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 .scoreboard-block {
-  display: none;
+  
   border-radius: 2vh;
   position: absolute;
   height: fit-content;
@@ -33,19 +33,19 @@
   font-weight: bold;
   color: #ededed;
   padding: 1.3vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 2.5vh;
 }
 #status-tab-label {
   position: absolute;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   right: 3vh;
   font-weight: bold;
 }
 
 .info-beam-title {
   position: absolute;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.3vh;
   letter-spacing: 0.1vh;
   left: 2.7vh;
@@ -56,7 +56,7 @@
 
 .info-beam-title-players {
   position: absolute;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.3vh;
   letter-spacing: 0.1vh;
   left: 2.4vh;
@@ -67,7 +67,7 @@
 
 .info-beam-status {
   position: absolute;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   right: 3vh;
   float: left;
   text-align: left;
@@ -75,12 +75,24 @@
 }
 
 .scoreboard-info-beam {
-  margin-top: .3vh;
+  margin-top: 0.3vh;
   position: relative;
   height: 4.25vh;
   width: 100%;
   border-bottom-left-radius: 2vh;
   border-bottom-right-radius: 2vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+.list-error {
+  color: white;
+  margin: 16px;
+  text-transform: none;
+  text-align: justify;
 }
 
 .fa-times {
@@ -93,4 +105,102 @@
 
 .fa-clock {
   color: #2873a7;
+}
+
+.entraceAnim {
+  animation: entraceAnimKeyframes 500ms ease-in-out 0s 1 normal forwards;
+}
+
+.exitAnim {
+  animation: exitAnimKeyframes 500ms ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes entraceAnimKeyframes {
+  0% {
+    animation-timing-function: ease-in;
+    opacity: 0;
+    transform: translateX(250px);
+  }
+
+  38% {
+    animation-timing-function: ease-out;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  55% {
+    animation-timing-function: ease-in;
+    transform: translateX(68px);
+  }
+
+  72% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  81% {
+    animation-timing-function: ease-in;
+    transform: translateX(32px);
+  }
+
+  90% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  95% {
+    animation-timing-function: ease-in;
+    transform: translateX(8px);
+  }
+
+  100% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+}
+
+@keyframes exitAnimKeyframes {
+  0% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  5% {
+    animation-timing-function: ease-in;
+    transform: translateX(30px);
+  }
+
+  15% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  25% {
+    animation-timing-function: ease-in;
+    transform: translateX(38px);
+  }
+
+  38% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  52% {
+    animation-timing-function: ease-in;
+    transform: translateX(80px);
+  }
+
+  65% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(250px);
+  }
 }
