@@ -35,10 +35,8 @@ end
 local function GetPlayersFromCoords(coords, distance)
     local players = GetPlayers()
     local closePlayers = {}
-
     coords = coords or GetEntityCoords(PlayerPedId())
     distance = distance or 5.0
-
     for i = 1, #players do
         local player = players[i]
         local target = GetPlayerPed(player)
@@ -48,7 +46,6 @@ local function GetPlayersFromCoords(coords, distance)
             closePlayers[#closePlayers + 1] = player
         end
     end
-
     return closePlayers
 end
 

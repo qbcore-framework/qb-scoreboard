@@ -1,58 +1,70 @@
 window.addEventListener("message", (event) => {
-  switch (event.data.action) {
-    case "open":
-      Open(event.data);
-      break;
-    case "close":
-      Close();
-      break;
-    case "setup":
-      Setup(event.data);
-      break;
-  }
+    switch (event.data.action) {
+        case "open":
+            open(event.data);
+            break;
+        case "close":
+            close();
+            break;
+        case "setup":
+            setup(event.data);
+            break;
+    }
 });
 
-const Open = (data) => {
-  $(".scoreboard-block").fadeIn(150);
-  $("#total-players").html("<p>" + data.players + " of " + data.maxPlayers + "</p>");
-
-  $.each(data.requiredCops, (i, category) => {
-    var beam = $(".scoreboard-info").find('[data-type="' + i + '"]');
-    var status = $(beam).find(".info-beam-status");
-
-    // For anyone wondering, this does work, you can leave the brackets out if you have just one line of code to execute
-    if (category.busy)
-      $(status).html('<i class="fas fa-clock"></i>');
-    else if (data.currentCops >= category.minimumPolice)
-      $(status).html('<i class="fas fa-check"></i>');
-    else
-      $(status).html('<i class="fas fa-times"></i>');
-  });
+const open = (data) => {
+    const scoreboard = document.querySelector(".scoreboard-block");
+    scoreboard.style.display = "block";
+    const totalPlayers = document.getElementById("total-players");
+    if (totalPlayers) {
+        totalPlayers.innerHTML = `<p>${data.players} of ${data.maxPlayers}</p>`;
+    }
+    Object.entries(data.requiredCops).forEach(([category, info]) => {
+        const beam = document.querySelector(`.scoreboard-info [data-type="${category}"]`);
+        if (!beam) return;
+        const status = beam.querySelector(".info-beam-status");
+        if (!status) return;
+        if (info.busy) {
+            status.innerHTML = "⏳";
+        } else if (data.currentCops >= info.minimumPolice) {
+            status.innerHTML = "✅";
+        } else {
+            status.innerHTML = "❌";
+        }
+    });
 };
 
-const Close = () => {
-  $(".scoreboard-block").fadeOut(150);
+const close = () => {
+    const scoreboard = document.querySelector(".scoreboard-block");
+    scoreboard.style.display = "none";
 };
 
-const Setup = (data) => {
-  let scoreboardHtml = "";
-  $.each(data.items, (index, value) => {
-    scoreboardHtml += `
-      <div class="scoreboard-info-beam" data-type=${index}>
-        <div class="info-beam-title">
-            <p>${value}</p>
-        </div>
-        <div class="info-beam-status"></div>
-      </div>
-    `;
-  });
-  scoreboardHtml += `
-    <div class="scoreboard-info-beam" style="background: #dc143c">
-      <div class="info-beam-title-players">
-        <p>Total Players</p>
-      </div>
-      <div class="info-beam-status" id="total-players" style="color: #ededed"></div>
-    </div>
-  `;
-  $(".scoreboard-info").html(scoreboardHtml);
+const setup = (data) => {
+    const scoreboardInfo = document.querySelector(".scoreboard-info");
+    if (!scoreboardInfo) return;
+    scoreboardInfo.innerHTML = "";
+    Object.entries(data.items).forEach(([index, value]) => {
+        const beamElement = document.createElement("div");
+        beamElement.className = "scoreboard-info-beam";
+        beamElement.setAttribute("data-type", index);
+        const titleElement = document.createElement("div");
+        titleElement.className = "info-beam-title";
+        titleElement.innerHTML = `<p>${value}</p>`;
+        const statusElement = document.createElement("div");
+        statusElement.className = "info-beam-status";
+        beamElement.appendChild(titleElement);
+        beamElement.appendChild(statusElement);
+        scoreboardInfo.appendChild(beamElement);
+    });
+    const playersBeam = document.createElement("div");
+    playersBeam.className = "scoreboard-info-beam";
+    const playersTitle = document.createElement("div");
+    playersTitle.className = "info-beam-title";
+    playersTitle.innerHTML = "<p>Total Players</p>";
+    const playersStatus = document.createElement("div");
+    playersStatus.className = "info-beam-status";
+    playersStatus.id = "total-players";
+    playersBeam.appendChild(playersTitle);
+    playersBeam.appendChild(playersStatus);
+    scoreboardInfo.appendChild(playersBeam);
 };

@@ -1,96 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --md-dark-primary: #f44336;
+    --md-dark-on-primary: #ffffff;
+    --md-dark-primary-container: #ffdad6;
+    --md-dark-on-primary-container: #410002;
+    --md-dark-secondary: #d32f2f;
+    --md-dark-on-secondary: #ffffff;
+    --md-dark-secondary-container: #ffdad5;
+    --md-dark-on-secondary-container: #410001;
+    --md-dark-tertiary: #ff8a65;
+    --md-dark-on-tertiary: #ffffff;
+    --md-dark-tertiary-container: #ffdacc;
+    --md-dark-on-tertiary-container: #410002;
+    --md-dark-surface: #1c1b1f;
+    --md-dark-on-surface: #e6e1e5;
+    --md-dark-surface-container-lowest: #0f0d13;
+    --md-dark-surface-container-low: #1d1b20;
+    --md-dark-surface-container: #211f26;
+    --md-dark-surface-container-high: #2b2930;
+    --md-dark-surface-container-highest: #36343b;
+    --md-dark-error: #b3261e;
+    --md-dark-on-error: #ffffff;
+    --md-dark-error-container: #93000a;
+    --md-dark-on-error-container: #ffdad5;
+    --md-dark-outline: #79747e;
+    --md-dark-outline-variant: #49454f;
+    --md-dark-inverse-surface: #e6e1e5;
+    --md-dark-inverse-on-surface: #1c1b1f;
+    --md-dark-scrim: rgba(0, 0, 0, 0.6);
+    --md-dark-shadow: rgba(0, 0, 0, 0.15);
+    --md-dark-success: #9bd880;
+    --md-dark-on-success: #193800;
+    --md-dark-success-container: #275000;
+    --md-dark-on-success-container: #b6f397;
+    --md-dark-warning: #ffba47;
+    --md-dark-on-warning: #422b00;
+    --md-dark-warning-container: #5f3f00;
+    --md-dark-on-warning-container: #ffddb0;
+    --md-dark-info: #b3c5ff;
+    --md-dark-on-info: #002a77;
+    --md-dark-info-container: #003ea7;
+    --md-dark-on-info-container: #dae1ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Exo 2", sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
 
 .container {
-  height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  text-transform: uppercase;
-  font-weight: 700;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 3vh;
 }
 
 .scoreboard-block {
-  display: none;
-  border-radius: 2vh;
-  position: absolute;
-  height: fit-content;
-  width: 40vh;
-  background-color: rgb(23 23 23 / 80%);
-  right: 3vh;
-  top: 30vh;
-  margin: 1vh;
+    display: none;
+    width: 30vh;
+    background-color: var(--md-dark-surface-container-high);
+    overflow: hidden;
+    box-shadow: 0 4px 8px var(--md-dark-shadow);
+    margin-top: 30vh;
 }
 
 .scoreboard-header {
-  border-radius: 1vh;
-  position: relative;
-  width: 92%;
-  height: 5vh;
-  margin: 1.7vh 1.3vh 0vh 1.7vh;
-  background: #dc143c;
+    width: 100%;
+    background: var(--md-dark-primary);
+    padding: 1.5vh;
+    text-align: center;
 }
 
-.scoreboard-header > p {
-  text-align: center;
-  font-weight: bold;
-  color: #ededed;
-  padding: 1.3vh;
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.5vh;
-}
-#status-tab-label {
-  position: absolute;
-  font-family: 'Poppins', sans-serif;
-  right: 3vh;
-  font-weight: bold;
+.scoreboard-header p {
+    font-weight: 700;
+    color: var(--md-dark-on-primary);
+    font-size: 2.5vh;
 }
 
-.info-beam-title {
-  position: absolute;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.3vh;
-  letter-spacing: 0.1vh;
-  left: 2.7vh;
-  line-height: 4vh;
-  font-weight: bold;
-  color: #ededed;
-}
-
-.info-beam-title-players {
-  position: absolute;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.3vh;
-  letter-spacing: 0.1vh;
-  left: 2.4vh;
-  line-height: 4vh;
-  font-weight: bold;
-  color: #ededed;
-}
-
-.info-beam-status {
-  position: absolute;
-  font-family: 'Poppins', sans-serif;
-  right: 3vh;
-  float: left;
-  text-align: left;
-  line-height: 4.25vh;
+.scoreboard-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .scoreboard-info-beam {
-  margin-top: .3vh;
-  position: relative;
-  height: 4.25vh;
-  width: 100%;
-  border-bottom-left-radius: 2vh;
-  border-bottom-right-radius: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4.25vh;
+    width: 100%;
+    background-color: var(--md-dark-surface-container);
+    padding: 0 2.7vh 0 2.7vh;
+    border-bottom: 1px solid var(--md-dark-surface-container-lowest);
 }
 
-.fa-times {
-  color: #dc143c;
+.info-beam-title,
+.info-beam-title-players {
+    font-size: 1.3vh;
+    letter-spacing: 0.1vh;
+    font-weight: 700;
+    color: var(--md-dark-on-surface);
 }
 
-.fa-check {
-  color: #28a745;
+.info-beam-status {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.fa-clock {
-  color: #2873a7;
+.info-beam-status p {
+    color: var(--md-dark-on-surface);
+    font-size: 1.3vh;
 }
