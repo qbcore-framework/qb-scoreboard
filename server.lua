@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject({ 'Functions' })
 
 QBCore.Functions.CreateCallback('qb-scoreboard:server:GetScoreboardData', function(_, cb)
     local totalPlayers = 0
